@@ -2,13 +2,13 @@ import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
 function App() {
-  const [session, setSession] = useState(25);
-  const [rest, setRest] = useState(5);
-  const [timer, setTimer] = useState(1500);
-  const [isActive, setisActive] = useState(false);
-  const [timingType, setTimingType] = useState("SESSION");
-  const [audioPlay, setAudioPlay] = useState(false);
-  const audioRef:any = useRef();
+  const [session, setSession] = useState<number>(25);
+  const [rest, setRest] = useState<number>(5);
+  const [timer, setTimer] = useState<number>(1500);
+  const [isActive, setisActive] = useState<boolean>(false);
+  const [timingType, setTimingType] = useState<string>("SESSION");
+  const [audioPlay, setAudioPlay] = useState<boolean>(false);
+  const audioRef:any = useRef<HTMLAudioElement>(null);
 
   const defaultSession = 25;
   const defaultRest = 5;
@@ -72,7 +72,7 @@ function App() {
   useEffect (() => {
     let interval: any;
 
-    if (isActive && timer > -1 ) {
+    if (isActive && timer > -1  ) {
       interval = setInterval (() => {
         setTimer((prevTimer) => prevTimer -1);
       }, 1000);
@@ -102,8 +102,8 @@ function App() {
     setTimeout(() => {
       setAudioPlay (false);
       audioRef.current.pause();
-      audioRef.currentTime = 0;
-    }, 3700);
+      audioRef.current.currentTime = 0;
+    }, 3690);
   }
 
 
