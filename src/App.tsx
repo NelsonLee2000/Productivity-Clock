@@ -6,7 +6,7 @@ function App() {
   const [rest, setRest] = useState<number>(5);
   const [timer, setTimer] = useState<number>(1500);
   const [isActive, setisActive] = useState<boolean>(false);
-  const [timingType, setTimingType] = useState<string>("SESSION");
+  const [timingType, setTimingType] = useState<string>("Session");
   const [audioPlay, setAudioPlay] = useState<boolean>(false);
   const audioRef:any = useRef<HTMLAudioElement>(null);
 
@@ -33,7 +33,7 @@ function App() {
     setTimer(defaultTimer);
     setSession(defaultSession);
     setRest(defaultRest);
-    setTimingType("SESSION");
+    setTimingType("Session");
     setAudioPlay (false);
     audioRef.current.pause();
     audioRef.current.currentTime = 0;
@@ -41,19 +41,19 @@ function App() {
 
   const changeBreak = (sign:any) => {
     if (sign === "+" && rest < 60) {
-      setRest((prevRest) => prevRest + 1);
+      setRest(rest+1);
     }
     if (sign === "-" && rest > 1) {
-      setRest((prevRest) => prevRest -1);
+      setRest(rest-1);
     }
   };
 
   const changeSession = (sign:any) => {
     if (sign === "+" && session < 60) {
-      setSession((prevSession) => prevSession + 1);
+      setSession(session+1);
     }
     if (sign === "-" && session > 1) {
-      setSession((prevSession) => prevSession -1);
+      setSession(session-1);
     } 
   };
 
@@ -61,27 +61,23 @@ function App() {
     if (!isActive) {
       setTimer(session*60);
     }
-    if (timingType === "BREAK" && isActive) {
-      setTimer(rest*60); 
-    }
-    if (timingType ==="SESSION" && isActive) {
-      setTimer(session*60);
-    }
   }, [session, timingType]);
 
   useEffect (() => {
     let interval: any;
 
-    if (isActive && timer > -1  ) {
+    if (isActive && timer >= 0  ) {
       interval = setInterval (() => {
         setTimer((prevTimer) => prevTimer -1);
       }, 1000);
-    } else if (timer === -1  && timingType === "SESSION") {
+    } else if (timer === -1  && timingType === "Session") {
       setAudioPlay(true);
-      setTimingType("BREAK");
-    } else if (timer === -1  && timingType === "BREAK") {
+      setTimingType("Break");
+      setTimer(rest*60);
+    } else if (timer === -1  && timingType === "Break") {
       setAudioPlay(true);
-      setTimingType("SESSION");
+      setTimingType("Session");
+      setTimer(session*60);
     }
 
     return () => clearInterval(interval);
