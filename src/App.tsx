@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
+import Alarm from "./assets/Alarm.mp3"
 
 function App() {
   const [session, setSession] = useState<number>(25);
@@ -123,7 +124,7 @@ function App() {
     <div className="background" style={{backgroundColor: color, transition}}> 
     <h1>Productivity Clock</h1>
     <p>by Nelson Lee</p>
-    <audio id="beep" ref={audioRef} src="./src/Alarm.mp3" ></audio>
+    <audio id="beep" ref={audioRef} src={Alarm} ></audio>
     
     <div className="session-break-section">
     <div className="session-section">
