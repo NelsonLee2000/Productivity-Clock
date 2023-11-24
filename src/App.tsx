@@ -10,6 +10,22 @@ function App() {
   const [audioPlay, setAudioPlay] = useState<boolean>(false);
   const audioRef:any = useRef<HTMLAudioElement>(null);
 
+  const [color, setColor] = useState<string>(`rgb(255, 255, 255)`) // 2/3change here
+
+  useEffect(() => {
+    if (isActive && timingType === "Session") {
+      setColor(`rgb(252, 207, 130)`);
+    }
+    else if (isActive && timingType === "Break") {
+      setColor(`rgb(162, 219, 252)`);
+    }
+    else {
+      setColor(`rgb(255, 255, 255)`);
+    }
+  }, [isActive, timingType]);
+
+  const transition = "all 1s";
+
   const defaultSession = 25;
   const defaultRest = 5;
   const defaultTimer = 1500;
@@ -102,28 +118,37 @@ function App() {
     }, 3690);
   }
 
-
-
   return (
     <>
+    <div className="background" style={{backgroundColor: color, transition}}> 
+    <h1>Productivity Clock</h1>
+    <p>by Nelson Lee</p>
     <audio id="beep" ref={audioRef} src="./src/Alarm.mp3" ></audio>
-    <div id="session-label">Session Length:</div>
-    <div id="session-length">{session}</div>
-    <button id="session-decrement" onClick ={() => changeSession("-")}>-</button>
-    <button id="session-increment" onClick ={() => changeSession("+")}>+</button>
-
-    <div id="break-label">Break Length:</div>
-    <div id="break-length">{rest}</div>
-    <button id="break-decrement" onClick={() => changeBreak("-")} >-</button>
-    <button id="break-increment" onClick={() => changeBreak("+")}>+</button>
-
-    <div id="timer-label">{timingType}{activeorpaused()}</div>
-    <div id="time-left">{formatedTime(timer)}</div>
-    <button id="start_stop" onClick={handleStartStop}>start/stop</button>
-    <button id="reset" onClick={handleClickReset}>reset</button>
-
-
     
+    <div className="session-break-section">
+    <div className="session-section">
+      <div id="session-label">Session Length:</div>
+      <div id="session-length">{session}</div>
+      <button id="session-decrement" onClick ={() => changeSession("-")}>-</button>
+      <button id="session-increment" onClick ={() => changeSession("+")}>+</button>
+    </div>  
+    <div className="break-section">
+      <div id="break-label">Break Length:</div>
+      <div id="break-length">{rest}</div>
+      <button id="break-decrement" onClick={() => changeBreak("-")} >-</button>
+      <button id="break-increment" onClick={() => changeBreak("+")}>+</button>
+    </div>
+    </div>
+    
+    <div className="timer-section">
+      <div id="timer-label">{timingType}{activeorpaused()}</div>
+      <div id="time-left">{formatedTime(timer)}</div>
+      </div>
+    <div className="start-stop-reset">
+        <button id="start_stop" onClick={handleStartStop}>start/stop</button>
+        <button id="reset" onClick={handleClickReset}>reset</button>
+    </div>
+    </div>
     </>
   )
 }
