@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import Alarm from "./assets/Alarm.mp3"
 
+const transition = "all 1s";
+
 function App() {
   const [session, setSession] = useState<number>(25);
   const [rest, setRest] = useState<number>(5);
@@ -24,8 +26,6 @@ function App() {
       setColor(`rgb(255, 255, 255)`);
     }
   }, [isActive, timingType]);
-
-  const transition = "all 1s";
 
   const defaultSession = 25;
   const defaultRest = 5;
